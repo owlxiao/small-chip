@@ -1,0 +1,3 @@
+[submodule "generators/rocket-chip"]
+	path = generators/rocket-chip
+	url = https://github.com/OpenXiangShan/rocket-chip.git
