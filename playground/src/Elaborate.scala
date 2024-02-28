@@ -6,6 +6,7 @@ import freechips.rocketchip.system.BaseConfig
 import org.chipsalliance.cde.config._
 import freechips.rocketchip.devices.tilelink.{BootROMLocated, CLINTKey, PLICKey}
 import freechips.rocketchip.devices.debug.{DebugModuleKey}
+import freechips.rocketchip.util._
 
 import smallchip.device._
 
@@ -39,4 +40,8 @@ object Elaborate extends App {
   def top       = new TestHarness()(config)
   val generator = Seq(chisel3.stage.ChiselGeneratorAnnotation(() => top))
   (new ChiselStage).execute(args, generator :+ CIRCTTargetAnnotation(CIRCTTarget.Verilog))
+
+  ElaborationArtefacts.files.foreach {
+    case (ext, contents) => os.write.over(os.pwd / "build" / s"system.${ext}", contents())
+  }
 }
